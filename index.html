@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Steps & Water Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header class="app-header">
+        <div class="app-icon">🏃‍♂️</div>
+        <div class="app-title-group">
+            <h1>Steps &amp; Water Tracker</h1>
+            <p class="subtitle">Auto logs • Hydration reminders • Last 7 days history</p>
+        </div>
+    </header>
+
+    <main class="content">
+        <section class="cards-grid">
+            <article class="card">
+                <div class="card-header">
+                    <h2>Today&apos;s Steps</h2>
+                    <span class="tag" id="stepStatusTag">Sensor: idle</span>
+                </div>
+                <div class="card-body steps-card-body">
+                    <div class="steps-main">
+                        <span class="steps-count" id="stepsToday">0</span>
+                        <span class="steps-label">steps today</span>
+                    </div>
+                    <p class="hint-text" id="stepHint">
+                        Tap <strong>Start tracking</strong> and keep your phone in pocket while walking.
+                    </p>
+                    <div class="button-row">
+                        <button id="btnToggleStepTracking" class="btn primary">Start tracking</button>
+                    </div>
+                    <p class="sensor-info" id="sensorInfo">
+                        Uses phone motion sensor where supported. Some browsers/webviews may limit background tracking.
+                    </p>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2>Water Intake</h2>
+                    <span class="tag soft" id="waterGoalTag">Goal: 2000 ml</span>
+                </div>
+                <div class="card-body">
+                    <div class="water-main">
+                        <div class="water-text-group">
+                            <span class="water-amount" id="waterToday">0 ml</span>
+                            <span class="water-goal" id="waterGoalLabel">/ 2000 ml</span>
+                        </div>
+                        <div class="water-progress-wrapper">
+                            <div class="water-progress-bar">
+                                <div class="water-progress-fill" id="waterProgress"></div>
+                            </div>
+                            <span class="water-progress-percent" id="waterPercentLabel">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <button class="btn secondary" data-water="150">+150 ml</button>
+                        <button class="btn secondary" data-water="250">+250 ml</button>
+                        <button class="btn secondary" data-water="500">+500 ml</button>
+                    </div>
+                    <div class="button-row">
+                        <button class="btn ghost" data-water="-150">-150 ml</button>
+                        <button class="btn ghost" data-water="-250">-250 ml</button>
+                        <button class="btn ghost" data-water="-500">-500 ml</button>
+                    </div>
+
+                    <div class="goal-row">
+                        <label for="waterGoalInput" class="goal-label">Daily goal (ml)</label>
+                        <div class="goal-input-wrap">
+                            <input type="number" id="waterGoalInput" min="500" max="6000" step="100" />
+                            <button class="btn ghost small" id="btnSaveGoal">Save</button>
+                        </div>
+                    </div>
+                    <p class="hint-text">
+                        Adjust your daily target (e.g., 2000–3000 ml). All values are stored locally only.
+                    </p>
+                </div>
+            </article>
+        </section>
+
+        <section class="card reminders-card">
+            <div class="card-header">
+                <h2>Hydration Reminders</h2>
+                <span class="tag soft" id="reminderStatusTag">Every 2 hours (in-app / notification)</span>
+            </div>
+            <div class="card-body">
+                <p class="hint-text">
+                    Turn this on to get a gentle reminder every 2 hours. If your browser or app allows it, you&apos;ll
+                    see a system notification. Otherwise, a popup will appear inside the app.
+                </p>
+                <div class="toggle-row">
+                    <span>Reminders</span>
+                    <label class="switch">
+                        <input type="checkbox" id="reminderToggle" checked />
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <p class="hint-text" style="margin-top:6px;">
+                    Tip: when your browser asks for permission, choose <strong>Allow notifications</strong> so you don&apos;t miss your water breaks.
+                </p>
+            </div>
+        </section>
+
+        <section class="card history-card">
+            <div class="card-header">
+                <h2>Daily History</h2>
+                <span class="tag soft" id="historyRangeLabel">Last 7 days</span>
+            </div>
+            <div class="card-body">
+                <div id="historyEmpty" class="history-empty">
+                    No history yet. Start walking and logging water to see your past days here.
+                </div>
+                <table id="historyTable" class="history-table hidden">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Steps</th>
+                            <th>Water (ml)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTbody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Hydration Reminder Modal (in-app fallback) -->
+    <div id="reminderModal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-dialog">
+            <h3>Time to drink water 💧</h3>
+            <p>Take a few sips now to stay hydrated. Do you want to log 150 ml?</p>
+            <div class="button-row">
+                <button id="btnLogFromReminder" class="btn primary">Yes, log 150 ml</button>
+                <button id="btnDismissReminder" class="btn ghost">Maybe later</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
